@@ -11,6 +11,7 @@
 
     <modules>
         <module>kafka-demo</module>
+        <module>springboot-kafka-demo</module>
     </modules>
 
 </project>
