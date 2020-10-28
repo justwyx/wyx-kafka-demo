@@ -8,7 +8,7 @@ import java.util.Properties;
 public class OneProducer {
 	// 第一个泛型：当前生产者所生产消息的key
 	// 第二个泛型：当前生产者所生产的消息本身
-	private KafkaProducer<Integer, String> producer;
+	private final KafkaProducer<Integer, String> producer;
 
 	public OneProducer() {
 		Properties properties = new Properties();
@@ -49,9 +49,7 @@ public class OneProducer {
 		 * 所以可以使用“max.in.flight.requests.per.connection”参数设置为1，这样可以保证producer必须把一个请求发送的数据发送成功了再发送后面的请求。避免数据出现乱序
 		 */
 
-		this.producer = new KafkaProducer<Integer, String>(properties);
-//        ProducerRecord<Integer, String> record3 = new ProducerRecord<>("cities", "tianjin");
-
+		this.producer = new KafkaProducer<>(properties);
 	}
 
 	public void sendMsg() {

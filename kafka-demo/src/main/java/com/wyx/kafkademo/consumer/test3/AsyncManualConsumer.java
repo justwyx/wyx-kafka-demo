@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Properties;
 
 public class AsyncManualConsumer extends ShutdownableThread {
-    private KafkaConsumer<Integer, String> consumer;
+    private final KafkaConsumer<Integer, String> consumer;
 
     public AsyncManualConsumer() {
         // 两个参数：
@@ -47,7 +47,7 @@ public class AsyncManualConsumer extends ShutdownableThread {
         properties.put("value.deserializer",
                 "org.apache.kafka.common.serialization.StringDeserializer");
 
-        this.consumer = new KafkaConsumer<Integer, String>(properties);
+        this.consumer = new KafkaConsumer<>(properties);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class AsyncManualConsumer extends ShutdownableThread {
         // 0，表示没有消息什么也不返回
         // >0，表示当时间到后仍没有消息，则返回空
         ConsumerRecords<Integer, String> records = consumer.poll(1000);
-        for(ConsumerRecord record : records) {
+        for(ConsumerRecord<Integer, String> record : records) {
             System.out.println("topic = " + record.topic());
             System.out.println("partition = " + record.partition());
             System.out.println("key = " + record.key());
